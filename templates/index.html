@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Twitter Sentiment Demo</title>
+    <link rel="stylesheet" href="/static/styles.css">
+</head>
+
+<body>
+    <div class="container">
+        <h1>Twitter Sentiment Analysis</h1>
+        <form method="post">
+            <label for="tweet_text">Enter tweet(s) — one per line</label>
+            <textarea id="tweet_text" name="tweet_text" rows="6" placeholder="Type or paste tweets here..."></textarea>
+            <button type="submit">Analyze</button>
+        </form>
+
+
+        {% if results is defined and results %}
+        <h2>Results</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Tweet</th>
+                    <th>Sentiment</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for r in results %}
+                <tr>
+                    <td>{{ r.tweet }}</td>
+                    <td class="{{ 'pos' if r.sentiment=='Positive' else 'neg' }}">{{ r.sentiment }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% elif error is defined %}
+        <p class="error">{{ error }}</p>
+        {% endif %}
+
+
+        <footer>
+            <p>Model: Logistic Regression trained on Sentiment140.</p>
+        </footer>
+    </div>
+</body>
+
+</html>
